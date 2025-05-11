@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Grid</title>
+    <style>
+        .calculator{
+            width: 320px;
+            background-color: #eee;
+        }
+        #screen{
+            background-color: black;
+            height: 100px;
+            width: calc(100% - 10px);
+            color: white;
+            padding: 5px;
+            text-align: right;
+            border: 0;
+            font-size: 32px;
+        }
+        .calc-button{
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            border: 0;
+        }
+        .orange{
+            background-color: orange;
+        }
+        .btn{
+            font-size: 16px;
+            height: 65px;
+            border: solid 1px;
+        }
+        .is-clear{
+            grid-column: span 2;
+        }
+        .zero{
+            grid-column: span 3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text"  id="screen" class="calc-numbers" readonly>
+        <div class="calc-button">
+            <button class="btn orange is-clear span-2 operator" onclick="clearScreen()">C</button>
+            <button class="btn orange operator" onclick="backspace()">&larr;</button>
+            <button class="btn orange operator" onclick="appendValue('/')">&divide;</button>
+            <button class="btn" onclick="appendValue(7)">7</button>
+            <button class="btn" onclick="appendValue(8)">8</button>
+            <button class="btn" onclick="appendValue(9)">9</button>
+            <button class="btn orange operator" onclick="appendValue('*')">x</button>
+            <button class="btn" onclick="appendValue(4)">4</button>
+            <button class="btn" onclick="appendValue(5)">5</button>
+            <button class="btn" onclick="appendValue(6)">6</button>
+            <button class="btn orange operator" onclick="appendValue('-')">-</button>
+            <button class="btn" onclick="appendValue(1)">1</button>
+            <button class="btn" onclick="appendValue(2)">2</button>
+            <button class="btn" onclick="appendValue(3)">3</button>
+            <button class="btn orange operator" onclick="appendValue('+')">+</button>
+            <button class="btn zero" onclick="appendValue(0)">0</button>
+            <button class="btn orange operator" onclick="getAnswer()">=</button>
+        </div>
+    </div>
+    <script>
+        const screen = document.getElementById("screen");
+
+        function clearScreen(){
+            screen.value = "";
+        }
+        function backspace(){
+            screen.value = screen.value.slice(0,-1);
+        }
+
+        function appendValue(n){
+            if(isOperator(n) && isOperator(screen.value[screen.value.length - 1])){
+                return;
+            } else{
+                screen.value += n;
+            }
+        }
+
+        function getAnswer(){
+            if(isOperator(screen.value[screen.value.length - 1])){
+                return;
+            } 
+            screen.value = eval(screen.value);
+        }
+        function isOperator(c){
+            return (c == "+" || c == "-" || c == "*" || c == "/");
+            // if(c == "+" || c == "-" || c == "*" || c == "/"){
+            //     return true;
+            // } else {
+            //     return false;
+            // }
+        }
+
+    </script>
+</body>
+</html>
